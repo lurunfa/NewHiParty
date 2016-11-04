@@ -1,2 +1,0 @@
-include Android.mk location inside global application.mk and Android.mk
-Run the command from the parent directory with app.mk and and.mk resides
