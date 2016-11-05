@@ -31,4 +31,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.orhanobut:logger:1.15'
+    compile 'com.google.code.gson:gson:2.8.0'
 }
