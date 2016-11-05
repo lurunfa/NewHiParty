@@ -11,4 +11,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
     }
+    
+    /**
+      *2016/11/5
+      *
+      *@author fa
+      *create at 2016/11/5
+      *
+      */
+    public void test(){
+        
+    }
 }
