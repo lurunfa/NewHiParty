@@ -48,7 +48,7 @@
 
     </FrameLayout>
     <FrameLayout
-        android:id="@+id/framright"
+        android:id="@+id/framRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

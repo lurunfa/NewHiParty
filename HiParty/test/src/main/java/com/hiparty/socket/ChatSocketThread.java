@@ -1,5 +1,7 @@
 package com.hiparty.socket;
 
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -50,11 +52,51 @@ public class ChatSocketThread extends Thread {
 
     public void sendMsg(String msg){
         ChatBean bean = new ChatBean(msg,mChatView.getUserId());
-        if (TextUtils.isEmpty(msg)&&mSocket)
+        if (!TextUtils.isEmpty(msg)&&mSocket.isConnected()&&mSocket != null){
+            if (!mSocket.isInputShutdown()){
+                out.println(new Gson().toJson(bean));
+            }
+        }
 
     }
+
+    public Handler mHandler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    String content = (String) msg.obj;
+                    ChatBean chatBean = new Gson().fromJson(content,ChatBean.class);
+                    mChatView.receiveMsg(chatBean);
+                    break;
+
+            }
+        }
+    };
     @Override
     public void run() {
         super.run();
+        init();
+        try{
+            while (true){
+                if (!mSocket.isClosed()){
+                    if (mSocket.isConnected()){
+                        if (!mSocket.isInputShutdown()){
+                            String content = null;
+                            if ((content =in.readLine())!=null){
+                                content +="\n";
+                                Message message = new Message();
+                                message.what = 1;
+                                message.obj = content;
+                                mHandler.sendMessage(message);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
