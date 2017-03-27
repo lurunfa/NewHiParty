@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ly_search"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/pink"
+            >
+            <Button
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search_arr"
+                android:id="@+id/search_arrow"
+                android:layout_alignParentLeft="true"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="搜索房间"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:id="@+id/textView"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         android:background="#cccccc"
+         >
+         <EditText
+             android:paddingTop="5dp"
+             android:layout_marginLeft="5dp"
+             android:layout_marginRight="5dp"
+             android:paddingBottom="5dp"
+             android:layout_width="0dp"
+             android:layout_weight="5"
+             android:layout_height="wrap_content"
+             android:hint=" 请输入房间名"
+             android:textSize="18dp"
+             android:background="@color/white"
+             android:id="@+id/search_edit_inform"
+             />
+         <Button
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:layout_height="wrap_content"
+             android:text="搜索"
+             android:textStyle="bold"
+             android:textSize="20dp"
+             android:textColor="@color/white"
+             android:background="@drawable/search_shape"
+             android:id="@+id/search_bottom"
+             />
+
+     </LinearLayout>
+
+    </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ly_search"
+        android:id="@+id/search_lv"
+        >
+
+    </ListView>
+    <include layout="@layout/shiftmenu"
+        ></include>
+
+
+</RelativeLayout>

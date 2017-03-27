@@ -32,8 +32,8 @@ public class ChatAdapter extends BaseAdapter {
         mUserId = userId;
     }
 
-    public void addBean(ChatBean chatBean){
-        if (chatBean !=null){
+    public void addBean(ChatBean chatBean) {
+        if (chatBean != null) {
             mDatas.add(chatBean);
             notifyDataSetChanged();
         }
@@ -56,34 +56,58 @@ public class ChatAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = mLayoutInflater.inflate(R.layout.lv_item, parent, false);
+            convertView.setTag(new ViewHolder(convertView));
+        }
 
-        return null;
+        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
+        viewHolder.init(position);
+
+
+        return convertView;
     }
-    private class ViewHolder{
-        public TextView mTipTextView,mTimeTextView,mLeftTextView,mRightTextView;
-        public FrameLayout mLeftFrameLayout,mRightFrameLayout;
+
+    private class ViewHolder {
+        public TextView mTipTextView, mTimeTextView, mLeftTextView, mRightTextView;
+        public FrameLayout mLeftFrameLayout, mRightFrameLayout;
 
         public ViewHolder(View view) {
             mTipTextView = (TextView) view.findViewById(R.id.tvTip);
-            mTimeTextView= (TextView) view.findViewById(R.id.tvTime);
+            mTimeTextView = (TextView) view.findViewById(R.id.tvTime);
             mLeftTextView = (TextView) view.findViewById(R.id.tvLeft);
             mRightTextView = (TextView) view.findViewById(R.id.tvRight);
             mLeftFrameLayout = (FrameLayout) view.findViewById(R.id.framLeft);
             mRightFrameLayout = (FrameLayout) view.findViewById(R.id.framRight);
         }
-        public void init(int position){
+
+        public void init(int position) {
             ChatBean bean = mDatas.get(position);
-            if (position == 0||position>0&&bean.time-mDatas.get(position-1).time > 60000){
+            if (position == 0 || position > 0 && bean.time - mDatas.get(position - 1).time > 60000) {
                 mTimeTextView.setVisibility(View.VISIBLE);
                 mTimeTextView.setText(format.format(bean.time));
-            }else {
+            } else {
                 mTimeTextView.setVisibility(View.GONE);
             }
             mLeftFrameLayout.setVisibility(View.GONE);
             mRightFrameLayout.setVisibility(View.GONE);
-            if (bean.content.equals("exit")){
+            if (bean.content.equals("exit")) {
                 mTipTextView.setVisibility(View.VISIBLE);
-                mTipTextView.setText(bean.name.equals(mUserId));
+                mTipTextView.setText(bean.name.equals(mUserId) ? "你已经退出讨论组" : bean.name + "已退出讨论组");
+
+            } else if (bean.content.equals("join")) {
+                mTipTextView.setVisibility(View.VISIBLE);
+                mTipTextView.setText(bean.name.equals(mUserId) ? "你进入了讨论组" : bean.name + "进入了讨论组");
+            } else {
+                mTipTextView.setVisibility(View.GONE);
+                mTipTextView.setVisibility(View.GONE);
+                mLeftFrameLayout.setVisibility(bean.name.equals(mUserId) ? View.GONE : View.VISIBLE);
+                mRightFrameLayout.setVisibility(bean.name.equals(mUserId) ? View.VISIBLE : View.GONE);
+                if (bean.name.equals(mUserId)) {
+                    mRightTextView.setText(bean.content);
+                } else {
+                    mLeftTextView.setText(bean.content);
+                }
             }
         }
     }
